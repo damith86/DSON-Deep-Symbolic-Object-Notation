@@ -10,9 +10,16 @@
 
 ---
 
-## 🌟 What is DSON?
+> 🔍 **What is DSON (Deep Symbolic Object Notation)?**
+>
+> DSON is a symbolic visual data format designed for AI-native design, pattern recognition, and cultural communication. It encodes not just structure — but **meaning, symmetry, evolution, and cultural context** — into a compact, LLM-parseable format.
+>
+> 🧠 Think of it as a visual language where:
+> - AI can reason over symbols like visual DNA
+> - Designers can compose culture-aware, animated forms
+> - Tools can generate SVG, Canvas, 3D from symbolic intent
 
-DSON (Deep Symbolic Object Notation) is a revolutionary data format that bridges the gap between structured data and meaningful visual representation. While traditional JSON excels at storing data and SVG at displaying graphics, DSON creates **computationally interpretable visual intelligence**.
+> ⚠️ **Note**: This project is not related to "Doge Serialized Object Notation". This DSON is an original initiative exploring symbolic geometry, mandala compression, and cross-cultural visual AI.
 
 ### The Problem DSON Solves
 
