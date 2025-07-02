@@ -1,0 +1,478 @@
+# DSON Specification v1.0
+
+*Deep Symbolic Object Notation - Technical Specification*
+
+## Table of Contents
+1. [Overview](#overview)
+2. [Core Structure](#core-structure)
+3. [Data Types](#data-types)
+4. [Layer Architecture](#layer-architecture)
+5. [Cultural Context](#cultural-context)
+6. [Temporal System](#temporal-system)
+7. [Semantic Annotations](#semantic-annotations)
+8. [Validation Rules](#validation-rules)
+9. [Extension Points](#extension-points)
+10. [Examples](#examples)
+
+## Overview
+
+DSON (Deep Symbolic Object Notation) is a structured data format for encoding visual symbols with semantic meaning, cultural context, and temporal behavior. It extends JSON with specialized structures for representing geometric, symbolic, and behavioral information.
+
+### Design Principles
+- **AI-Native**: Designed for machine interpretation and reasoning
+- **Cultural Awareness**: Built-in support for cultural interpretation patterns
+- **Temporal Intelligence**: Time and animation as first-class citizens
+- **Semantic Richness**: Meaning encoded alongside visual structure
+- **Modular Composition**: Reusable, composable visual components
+
+## Core Structure
+
+Every DSON object follows this top-level structure:
+
+```json
+{
+  "dson_version": "1.0",
+  "type": "symbolic_structure",
+  "identifier": "optional.unique.name",
+  "meta": { /* metadata */ },
+  "structure": { /* visual structure */ },
+  "temporal": { /* animation/behavior */ },
+  "semantics": { /* meaning/tags */ },
+  "signature": { /* linking/validation */ }
+}
+```
+
+### Required Fields
+- `dson_version`: String - DSON format version
+- `type`: String - Object type identifier
+- `structure`: Object - Visual structure definition
+
+### Optional Fields  
+- `identifier`: String - Unique identifier for referencing
+- `meta`: Object - Creation metadata
+- `temporal`: Object - Animation and behavior
+- `semantics`: Object - Semantic annotations
+- `signature`: Object - Validation and linking
+
+## Data Types
+
+### Basic Types
+- `String`: UTF-8 text
+- `Number`: IEEE 754 double precision
+- `Boolean`: true/false
+- `Array`: Ordered list of values
+- `Object`: Key-value pairs
+
+### DSON-Specific Types
+
+#### Color
+```json
+{
+  "color": "#FF0000",           // Hex format
+  "color": "rgb(255, 0, 0)",    // RGB format
+  "color": "hsl(0, 100%, 50%)", // HSL format
+  "color": [255, 0, 0, 255]     // RGBA array
+}
+```
+
+#### Position
+```json
+{
+  "cartesian": {"x": 10, "y": 20},
+  "polar": {"angle": 45, "radius": 30},
+  "relative": {"dx": 5, "dy": -3}
+}
+```
+
+#### Temporal Point
+```json
+{
+  "t": 0.5,        // Time (0.0 to 1.0)
+  "state": "open", // State identifier
+  "easing": "ease-in-out"
+}
+```
+
+## Layer Architecture
+
+DSON objects consist of multiple layers that can be processed independently:
+
+### Layer Types
+
+#### Grid Layer
+Cartesian coordinate system for pixel-perfect data:
+```json
+{
+  "name": "base_pixels",
+  "type": "grid", 
+  "resolution": [32, 32],
+  "data": [
+    {"x": 0, "y": 0, "rgba": [255, 255, 255, 255]},
+    {"x": 1, "y": 0, "rgba": [255, 0, 0, 255]}
+  ]
+}
+```
+
+#### Radial Layer
+Polar coordinate system for mandala-style layouts:
+```json
+{
+  "name": "mandala_rings",
+  "type": "radial",
+  "center": {"x": 16, "y": 16},
+  "data": [
+    {
+      "index": 1,
+      "angle": 0,
+      "radius": 8,
+      "color": "#FF0000",
+      "shape": "circle",
+      "size": 2
+    }
+  ]
+}
+```
+
+#### Vector Layer
+Scalable geometric shapes:
+```json
+{
+  "name": "geometric_forms",
+  "type": "vector",
+  "data": [
+    {
+      "type": "path",
+      "d": "M10,10 L20,20 L10,30 Z",
+      "fill": "#00FF00",
+      "stroke": "#000000"
+    }
+  ]
+}
+```
+
+#### Symbolic Layer
+High-level symbolic elements:
+```json
+{
+  "name": "symbols",
+  "type": "symbolic",
+  "data": [
+    {
+      "symbol": "lotus",
+      "position": {"angle": 90, "radius": 15},
+      "scale": 0.8,
+      "reference": "dson://library/lotus.standard"
+    }
+  ]
+}
+```
+
+## Cultural Context
+
+Cultural context influences how DSON objects are interpreted and rendered:
+
+```json
+{
+  "cultural_context": {
+    "directionality": "clockwise",     // "clockwise" | "counter_clockwise"
+    "reading_order": "inner_to_outer", // "inner_to_outer" | "outer_to_inner"
+    "symmetry_preference": "radial",   // "radial" | "bilateral" | "rotational"
+    "color_semantics": "western",      // "western" | "eastern" | "indigenous"
+    "sacred_proportions": true,        // Use golden ratio, sacred geometry
+    "cultural_tags": ["buddhist", "tibetan"]
+  }
+}
+```
+
+### Cultural Interpretation Rules
+
+#### Directionality
+- `clockwise`: Elements progress clockwise from 0° (top)
+- `counter_clockwise`: Elements progress counter-clockwise
+
+#### Reading Order
+- `inner_to_outer`: Start from center, move outward
+- `outer_to_inner`: Start from perimeter, move inward
+
+#### Color Semantics
+- `western`: Red=danger, Green=go, Blue=calm
+- `eastern`: Red=luck, White=death, Gold=prosperity
+- `indigenous`: Earth tones, natural progressions
+
+## Temporal System
+
+DSON supports time-based animation and state changes:
+
+```json
+{
+  "temporal": {
+    "duration": 3.0,          // Total duration in seconds
+    "loop": true,             // Whether animation loops
+    "fps": 60,                // Target frame rate
+    "keyframes": [
+      {
+        "t": 0.0,
+        "state": "closed",
+        "properties": {
+          "scale": 0.5,
+          "opacity": 0.8
+        }
+      },
+      {
+        "t": 0.5,
+        "state": "opening",
+        "properties": {
+          "scale": 1.2,
+          "opacity": 1.0
+        },
+        "easing": "ease-out"
+      },
+      {
+        "t": 1.0,
+        "state": "open",
+        "properties": {
+          "scale": 1.0,
+          "opacity": 1.0
+        }
+      }
+    ],
+    "behaviors": [
+      {
+        "type": "pulse",
+        "frequency": 0.5,
+        "intensity": 0.1
+      },
+      {
+        "type": "rotate",
+        "speed": 0.2,
+        "axis": "z"
+      }
+    ]
+  }
+}
+```
+
+### Supported Behaviors
+- `pulse`: Rhythmic scaling
+- `rotate`: Continuous rotation
+- `breathe`: Organic expansion/contraction
+- `glow`: Luminosity variation
+- `ripple`: Wave-like distortion
+- `spiral`: Spiral motion
+
+### Easing Functions
+- `linear`: Constant rate
+- `ease-in`: Slow start
+- `ease-out`: Slow end
+- `ease-in-out`: Slow start and end
+- `bounce`: Bouncing effect
+- `elastic`: Elastic snap
+
+## Semantic Annotations
+
+Semantic data provides meaning and context:
+
+```json
+{
+  "semantics": {
+    "tags": ["character", "mascot", "friendly"],
+    "meaning": "Represents growth and vitality",
+    "emotional_tone": "joyful",
+    "cultural_significance": "Symbol of abundance in harvest festivals",
+    "linked_behaviors": ["pulse", "glow"],
+    "accessibility": {
+      "alt_text": "Smiling tomato character with radiating energy",
+      "screen_reader_description": "Animated red circular character with leaf crown"
+    },
+    "reversible": true,
+    "complexity_level": "intermediate"
+  }
+}
+```
+
+### Semantic Categories
+- `tags`: Descriptive keywords
+- `meaning`: Human-readable interpretation
+- `emotional_tone`: Emotional association
+- `cultural_significance`: Cultural context
+- `linked_behaviors`: Associated animations
+- `accessibility`: Accessibility information
+- `reversible`: Can be reconstructed from minimal data
+- `complexity_level`: Rendering complexity
+
+## Validation Rules
+
+### Schema Validation
+DSON objects must validate against the JSON schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["dson_version", "type", "structure"],
+  "properties": {
+    "dson_version": {
+      "type": "string",
+      "enum": ["1.0"]
+    },
+    "type": {
+      "type": "string",
+      "enum": ["symbolic_structure", "glyph", "mandala", "pattern"]
+    }
+  }
+}
+```
+
+### Geometric Constraints
+- Angles must be 0-360 degrees
+- Radii must be positive numbers
+- Colors must be valid CSS color values
+- Coordinates must be within resolution bounds
+
+### Cultural Validation
+- Cultural tags must be from approved vocabulary
+- Directional preferences must be consistent
+- Sacred proportions must follow mathematical rules
+
+### Temporal Validation
+- Keyframe times must be 0.0 to 1.0
+- Duration must be positive
+- Easing functions must be supported
+
+## Extension Points
+
+DSON supports extensions through:
+
+### Custom Layer Types
+```json
+{
+  "name": "custom_layer",
+  "type": "extension:my_custom_type",
+  "extension_data": {
+    "custom_property": "value"
+  }
+}
+```
+
+### Custom Behaviors
+```json
+{
+  "behaviors": [
+    {
+      "type": "extension:particle_system",
+      "particle_count": 50,
+      "emission_rate": 10
+    }
+  ]
+}
+```
+
+### Cultural Extensions
+```json
+{
+  "cultural_context": {
+    "extension:celtic_knot": {
+      "strand_count": 4,
+      "crossing_pattern": "over_under"
+    }
+  }
+}
+```
+
+## Examples
+
+### Basic Mandala
+```json
+{
+  "dson_version": "1.0",
+  "type": "mandala",
+  "meta": {
+    "name": "Simple Flower",
+    "creator": "DSON Example"
+  },
+  "structure": {
+    "resolution": [64, 64],
+    "encoding_mode": "mandala_radial",
+    "symmetry": "radial",
+    "layers": [
+      {
+        "name": "petals",
+        "type": "radial",
+        "data": [
+          {"angle": 0, "radius": 20, "color": "#FF69B4", "shape": "ellipse"},
+          {"angle": 60, "radius": 20, "color": "#FF69B4", "shape": "ellipse"},
+          {"angle": 120, "radius": 20, "color": "#FF69B4", "shape": "ellipse"},
+          {"angle": 180, "radius": 20, "color": "#FF69B4", "shape": "ellipse"},
+          {"angle": 240, "radius": 20, "color": "#FF69B4", "shape": "ellipse"},
+          {"angle": 300, "radius": 20, "color": "#FF69B4", "shape": "ellipse"}
+        ]
+      },
+      {
+        "name": "center",
+        "type": "radial", 
+        "data": [
+          {"angle": 0, "radius": 0, "color": "#FFD700", "shape": "circle", "size": 8}
+        ]
+      }
+    ]
+  },
+  "temporal": {
+    "duration": 4.0,
+    "loop": true,
+    "behaviors": [
+      {"type": "rotate", "speed": 0.1}
+    ]
+  },
+  "semantics": {
+    "tags": ["flower", "nature", "mandala"],
+    "meaning": "Symbol of natural beauty and growth"
+  }
+}
+```
+
+### Cultural Symbol
+```json
+{
+  "dson_version": "1.0",
+  "type": "symbolic_structure",
+  "identifier": "celtic.knot.trinity",
+  "meta": {
+    "name": "Trinity Knot",
+    "cultural_origin": "Celtic",
+    "historical_period": "Iron Age"
+  },
+  "structure": {
+    "resolution": [48, 48],
+    "encoding_mode": "vector_paths",
+    "cultural_context": {
+      "directionality": "clockwise",
+      "reading_order": "outer_to_inner",
+      "cultural_tags": ["celtic", "christian", "pagan"]
+    },
+    "layers": [
+      {
+        "name": "knot_paths",
+        "type": "vector",
+        "data": [
+          {
+            "type": "path",
+            "d": "M24,8 Q32,16 24,24 Q16,32 8,24 Q16,16 24,8 Z",
+            "fill": "none",
+            "stroke": "#8B4513",
+            "stroke_width": 3
+          }
+        ]
+      }
+    ]
+  },
+  "semantics": {
+    "tags": ["trinity", "eternal", "sacred"],
+    "meaning": "Represents the eternal cycle and divine trinity",
+    "cultural_significance": "Sacred symbol in Celtic spirituality"
+  }
+}
+```
+
+---
+
+*This specification is maintained by the DSON community and is subject to evolution based on implementation feedback and research developments.*
