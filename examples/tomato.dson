@@ -1,0 +1,14 @@
+{
+  "dson_version": "1.0",
+  "type": "symbolic_structure",
+  "meta": {
+    "name": "TomatoCharacter",
+    "creator": "Damith Welikala"
+  },
+  "structure": {
+    "resolution": [32, 32],
+    "encoding_mode": "mandala_radial",
+    "symmetry": "radial",
+    "layers": []
+  }
+}
